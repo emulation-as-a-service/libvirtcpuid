@@ -45,6 +45,8 @@
 static bool emit_debug;
 static bool suppress_output;
 
+#define arch_prctl(...) 1
+
 #define debug(s, ...) ({ if (emit_debug && !suppress_output) warnx(s, ##__VA_ARGS__); })
 
 #define secure_err(exit_code, fmt, ...) ({  \
@@ -313,7 +315,7 @@ static void cpuid_handle_trap(void *uctx)
  * - It return false otherwise. The signal should be passed to the next
  *   handler.
  */
-#define CPUID_OPCODE 0xa20f
+#define CPUID_OPCODE 0x320f
 static bool sigsegv_handler(int signal, siginfo_t *info, void *uctx)
 {
     if (info->si_code != SI_KERNEL)
